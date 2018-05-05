@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RoomInfoStartType">
+
+<resultMap type="RoomInfo" id="roomInfo1" autoMapping="true">
+		<association property="roomType" javaType="RoomType" column="roomTypeId" autoMapping="true"></association>
+		<association property="roomstate" javaType="RoomState" column="roomStateId" autoMapping="true"></association>
+	</resultMap>
+
+<!-- 查找显示所有 房间-->
+<select id="findAllRoomInfoAll" resultMap="roomInfo1">
+select i.roomid,i.roomstateid,i.roombuild,i.roomphone,i.roomtypeid,s.roomstate,t.roomtype,t.money,t.bookmoney,t.roommark,t.roomprice 
+from roominfo i,roomstate s,roomtype t 
+where i.roomtypeid=t.roomtypeid and i.roomstateid=s.roomstateid and i.stateTime=1
+</select>
+
+<!--根据房间状态 查找显示 房间-->
+<select id="findAllRoomInfo" resultMap="roomInfo1" parameterType="Map">
+select i.roomid,i.roomstateid,i.roombuild,i.roomphone,i.roomtypeid,s.roomstate,t.roomtype,t.money,t.bookmoney,t.roommark,t.roomprice 
+from roominfo i,roomstate s,roomtype t 
+where i.roomtypeid=t.roomtypeid and i.roomstateid=s.roomstateid  and i.stateTime=1
+     	<if test="roomStateid!=null and roomStateid!=0">
+     	and i.roomstateid=#{roomStateid}
+     	</if>	
+</select>
+<!-- 查询入住人信息 -->
+<select id="findLiveInfoAll" resultType="LiveInfo" >
+select l.roomid,l.livetime,l.livedays from liveinfo l,roominfo i 
+where l.roomid=i.roomid and i.stateTime=1 and l.state=1
+</select>
+
+
+<!-- 所有 房间数-->
+<select id="findByStartid" resultType="int">
+select count(*) from roominfo where stateTime=1
+</select>
+<!-- 空房间数-->
+<select id="findByStartid1" resultType="int">
+select count(*) from roominfo where roomstateid=1 and stateTime=1
+</select>
+<!-- 已预订房间数-->
+<select id="findByStartid2" resultType="int">
+select count(*) from roominfo where roomstateid=2 and stateTime=1
+</select>
+<!--已入住 房间数-->
+<select id="findByStartid3" resultType="int">
+select count(*) from roominfo where roomstateid=3 and stateTime=1
+</select>
+<!-- 未住满房间数-->
+<select id="findByStartid4" resultType="int">
+select count(*) from roominfo where roomstateid=4 and stateTime=1
+</select>
+<!-- 脏房间房间数-->
+<select id="findByStartid5" resultType="int">
+select count(*) from roominfo where roomstateid=5 and stateTime=1
+</select>
+</mapper>

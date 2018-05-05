@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PurchasePlanDao">
+
+<select id="findproduct" resultType="com.entity.ProductInfo">
+	select * from productinfo
+</select>
+
+<insert id="AddPurchasePlan" parameterType="com.entity.PurchasePlan">
+	insert into purchaseplan values(#{planId},#{planDate},#{userId},#{state},#{mark})
+</insert>
+<insert id="AddPurchasePlanDetail" parameterType="com.entity.PurchasePlanDetail">
+	insert into PurchasePlanDetail values(#{planId},#{productId},#{productName},#{productSum},#{buyPrice})
+</insert>
+
+<select id="FindPurchasePlan"  resultType="com.entity.PurchasePlan" parameterType="Map">
+select p.planid,p.plandate, p.mark, p.state,s.names  from PurchasePlan p,users s where p.userid=s.userid
+		<!-- select * from PurchasePlan where 1=1 -->
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+		 and planDate  between #{begin} and #{end}
+		</if>
+		<if test="spanid!=null and spanid!=''">
+		and planId like '%'||#{spanid}||'%'
+		</if>
+		<if test="start!=null and start!=''">
+		and state=#{start}
+		</if> 
+</select>
+<select id="FindPurchasePlanDetail" parameterType="String" resultType="com.entity.PurchasePlanDetail">
+		select * from PurchasePlanDetail where planId=#{planId}
+</select>
+<delete id="daletePurDetail" parameterType="String">
+	delete purchaseplandetail where planId=#{planId}
+</delete>
+	
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PurchaseOrderDao">
+	<insert id="AddPurchaseOrder" parameterType="com.entity.PurchaseOrder">
+		insert into PurchaseOrder values(#{orderId},#{planId},#{userIdC},#{orderDate},#{MoneyType},#{address},#{totalMoney},#{mark},#{state},#{userIdS})
+	</insert>
+	<insert id="AddPurchaseOrderDetail" parameterType="com.entity.PurchaseOrderDetail">
+		insert into PurchaseOrderDetail values(#{orderId},#{productId},#{productName},#{productSum},#{buyPrice})
+	</insert>
+	
+	<update id="updatePurchasePlan" parameterType="String">
+		update PurchasePlan set state='已审核' where planId=#{planId}
+	</update>
+	
+	<select id="FindPurchaseOrder"  resultType="com.entity.PurchaseOrder" parameterType="Map">
+		select p.orderid,p.planid,p.orderdate,p.state,u.names as names,s.names as namec from purchaseorder p 
+		join users u on p.useridc=u.userid join users s on p.userids=s.userid
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and orderDate between #{begin} and #{end}
+		</if>
+		<if test="spanid!=null and spanid!=''">
+		and orderid like '%'||#{spanid}||'%'
+		</if>
+		<if test="start!=null and start!=''">
+		and state=#{start}
+		</if> 
+	</select>
+	<select id="FindPurchaseOrderDetail" parameterType="String" resultType="com.entity.PurchaseOrderDetail">
+		select * from PurchaseOrderDetail where orderId=#{orderId}
+	</select>
+	<delete id="deleteFindPurchaseOrderDetail" parameterType="String">
+		delete PurchaseOrderDetail where orderId=#{orderId}
+	</delete>
+</mapper>

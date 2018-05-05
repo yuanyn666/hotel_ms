@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserMyRoleDao">
+
+<select id="findMyRole1" resultType="RightCode" parameterType="Map">
+select r.righturl,r.ringhttext,r.righttip 
+from users u, myrole m, rightcode r, myrolerightcode mc 
+where mc.rightcodeid=r.rightCodeId and mc.roleid=m.roleid and 
+m.roleid=u.usersroleid and u.usersroleid=#{usersRoleId} and u.userid=#{userid}
+</select>
+
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.DepotProductDao">
+<!-- 查找所有 -->
+<select id="findAllDepotProduct" resultType="DepotProduct">
+select p.productName, d.producttype, d.depotnum, d.totalmoney, d2.depotname
+from ProductInfo p join DepotProduct d on p.productId=d.productId 
+join DepotInfo d2 on d.depotId=d2.depotId
+</select>
+
+<!-- 根据类别查找 -->
+<select id="findProducttype" resultType="DepotProduct" parameterType="String">
+select p.productName, d.producttype, d.depotnum, d.totalmoney, d2.depotname
+from ProductInfo p join DepotProduct d on p.productId=d.productId 
+join DepotInfo d2 on d.depotId=d2.depotId 
+where producttype like '%'||#{productType}||'%'
+</select>
+
+<!-- 根据id查找 -->
+<select id="findProductById" resultType="DepotProduct" parameterType="String">
+select productId,productType,depotNum,totalMoney,depotId,depotPrice,outDepotPrice,jainMoney,minDepotNum，maxDepotNum from DepotProduct 
+where depotPId=#{depotPId}
+</select>
+
+</mapper>

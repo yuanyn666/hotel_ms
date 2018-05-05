@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.LiveInfoDao">
+
+
+<!-- 查询房间号-->
+<select id="selectA" resultType="RoomInfo"  parameterType="int">
+	select roomId from RoomInfo where roomId=#{roomId}
+</select>
+<!-- 客户类型 -->
+<select id="select" resultType="CustomerType" >
+		select customerTypeId,cTypename,disCount from CustomerType
+</select>
+
+
+<!-- 一对多 -->
+<resultMap type="RoomInfo" id="selectOne" autoMapping="true">
+<association property="roomType" autoMapping="true" column="roomTypeId" javaType="RoomType"></association>
+</resultMap>
+<select id="selectInfo" resultMap="selectOne">
+select r.roomid,t.roomtype,t.roomprice,t.money,r.roomStateid from roomInfo r join roomType t on r.roomTypeId=t.roomTypeId
+</select>
+
+<select id="selectType" resultMap="selectOne">
+select r.roomid,t.roomtype,t.roomprice,t.money from roomInfo r join roomType t on r.roomTypeId=t.roomTypeId 
+where r.roomId=#{roomId}
+</select>
+
+                                <!-- 客人入住模块 -->
+<insert id="insert" parameterType="LiveInfo">
+insert into LiveInfo values(#{liveId },#{roomId},#{liveMoney},#{customerTypeId},#{customerName},
+#{customerSex},#{cardType},#{cardId},
+#{phone},#{address},#{liveNum},#{liveTime},#{liveDays},#{payType},#{userIdnumber},#{state},#{mark})
+</insert>
+
+<!-- resultMap -->
+<resultMap type="RoomInfo" id="selectTwo" autoMapping="true">
+<association property="roomType" autoMapping="true" javaType="RoomType" column="roomtypeid"></association>
+<association property="roomstate" autoMapping="true" javaType="RoomState" column="roomstateid"></association>
+</resultMap>
+<!-- 查询房价，房类以及房态 -->
+<select id="selectR" resultMap="selectTwo">
+select r.roomid,s.roomState,t.roomtype,t.roomprice from roomInfo r join roomState s on 
+r.roomstateid=s.roomstateid join roomType t on r.roomtypeid=t.roomtypeid
+</select>
+
+<select id="selectRrr" resultMap="selectTwo">
+select r.roomid,s.roomstate,t.roomtype,t.roomprice,t.money from roomInfo r join roomState s on r.roomstateid=s.roomstateid
+join roomType t on r.roomtypeid=t.roomtypeid where s.roomState='空净房'
+</select>
+
+<select id="selectRE" resultMap="selectTwo">
+select r.roomid,s.roomState,t.roomtype,t.roomprice from roomInfo r join roomState s on r.roomstateid=s.roomstateid join roomType t on r.roomtypeid=t.roomtypeid 
+where s.roomStateId=1
+</select>
+
+<!-- 根据房间号查询房价，房类以及房态 -->
+<select id="selectOne" resultMap="selectTwo">
+select r.roomid,s.roomstate,t.roomtype,t.roomprice,t.money,t.bookMoney,t.roomtypeid,r.roomstateid from roomInfo r join roomState s on r.roomstateid=s.roomstateid join roomType t on 
+r.roomtypeid=t.roomtypeid where r.roomId=#{roomId}
+</select>
+<!-- 查询在住客人 -->
+<select id="selectLiveInfoS" resultMap="selectThress" parameterType="Map">
+SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select n.roomId,n.liveid,n.livemoney,c.cTypeName,n.customerName,n.customerSex,n.cardType,n.cardId,n.phone,n.address,n.liveNum,
+n.liveTime,n.liveDays,u.names,n.payType,n.mark from liveInfo n join 
+customerType c on n.customerTypeId=c.customerTypeId join Users u on
+ n.userIdnumber=u.userId join roomInfo r on n.roomid= r.roomid where n.state=1 and r.statetime=1
+        <if test="customerName!=null and customerName!=''">
+			and n.customerName like '%'||#{customerName}||'%'
+		</if>
+		) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+</select>
+<!-- 查询在住总人数 -->
+<select id="total" parameterType="Map" resultType="int">
+
+select count(n.liveid) from liveInfo n join 
+customerType c on n.customerTypeId=c.customerTypeId join Users u on n.userIdnumber=u.userId join roominfo r on n.roomid= r.roomid where n.state=1 and r.statetime=1
+
+        <if test="customerName!=null and customerName!=''">
+			and n.customerName like '%'||#{customerName}||'%'
+		</if>
+</select>
+
+
+<!-- 查询房间类型 -->
+<select id="selectS" resultType="RoomType">
+select roomtypeid, roomtype, roomprice,money, bookmoney, roommark from roomtype
+</select>
+
+<select id="findRTypeById" resultType="RoomType" parameterType="int">
+select roomtypeid, roomtype, roomprice,money, bookmoney, roommark 
+from roomtype where roomtypeid=#{roomtypeid}
+</select>
+
+
+<!-- 修改房间状态 为已入住-->
+<update id="update" parameterType="RoomInfo">
+update roomInfo set roomStateid=3 where roomId=#{roomId}
+</update>
+
+<!-- 预定 模块-->
+<select id="findRoomInfoById" resultType="RoomInfo" parameterType="int">
+select roomid from roomInfo where roomstateid=1 and roomtypeid=#{roomtypeId}
+</select>
+
+
+
+<update id="updateRe" parameterType="RoomInfo">
+update roomInfo set roomStateid=2 where roomId=#{roomId}
+</update>
+
+<resultMap type="LiveInfo" id="selectThress" autoMapping="true">
+<association property="users" autoMapping="true" column="userId" javaType="Users"></association>
+<association property="customerType" autoMapping="true" column="customerTypeId" javaType="CustomerType"></association>
+</resultMap>
+<!-- 查询房间信息 -->
+
+<select id="selectL" resultMap="selectThress">
+select n.roomId,n.liveid,n.roomid,n.livemoney,c.cTypeName,n.customerName,n.customerSex,n.cardType,n.cardId,n.phone,n.address,n.liveNum,
+n.liveTime,n.liveDays,u.names,n.userIdnumber,n.payType,n.mark from liveInfo n join 
+customerType c on n.customerTypeId=c.customerTypeId join Users u on n.userIdnumber=u.userId where n.roomId=#{roomId} and n.state=1
+</select>
+<!-- 续房缴费 -->
+<update id="insertXu" parameterType="LiveInfo">
+update LiveInfo set liveMoney=liveMoney+#{liveMoney},liveDays=liveDays+#{liveDays} where roomId=#{roomId}
+</update>
+<!-- 查询房间状态 -->
+<select id="selectRoom"  resultType="RoomState">
+select * from RoomState
+</select>
+<!-- 修改房间状态为已住人 -->
+<update id="updateR" parameterType="RoomInfo">
+update RoomInfo set roomStateId=#{roomStateId} where roomId=#{roomId}
+</update>
+<!-- 录入预定信息 -->
+<insert id="insertReser" parameterType="ReserveInfo">
+insert into reserveinfo(reserveid,customername,customerphone,roomtypeid,roomid,endtime,keeptime,
+reservetime,remark,bookmoney,customertypeid,state,totalmoney) values(#{reserveId},#{customerName},
+#{customerPhone},#{roomTypeId},#{roomId},#{endTime},#{keepTime},
+#{reserveTime},#{remark},#{bookMoney},#{customerTypeId},#{state},#{totalMoney})
+</insert>
+<!-- 删除房间信息 -->
+<delete id="delete" parameterType="ReserveInfo">
+delete from ReserveInfo where roomId=#{roomId}
+</delete>
+<!-- 查询预订信息 -->
+
+<select id="selectReserById" resultType="ReserveInfo">
+select * from ReserveInfo where state=1 and roomid=#{roomId}
+</select>
+
+<resultMap type="ReserveInfo" id="ReserveInfoOne" autoMapping="true">
+<association property="roomtype" autoMapping="true" column="roomtypeid" javaType="RoomType"></association>
+<association property="customerType" autoMapping="true" column="customertypeid" javaType="CustomerType"></association>
+</resultMap>
+<!-- 查询预订信息 1-->
+<select id="selectReserById1" resultMap="ReserveInfoOne">
+select n.reserveid, n.customername, n.customerphone,n.roomtypeid, r.roomtype,
+r.roomPrice,r.money,r.bookMoney,n.roomid,n.endtime,n.keeptime, n.reservetime, 
+n.remark,n.bookmoney,n.customertypeid,n.state,n.totalmoney, c.ctypename 
+from ReserveInfo n join RoomType r on n.roomtypeid=r.roomtypeid
+join CustomerType c on n.customertypeid=c.customertypeid where n.state=1 and n.roomid=#{roomId}
+</select>
+
+
+<!--//查询预订信息-->
+<select id="selectReser" resultMap="ReserveInfoOne">
+select n.reserveid, n.customername, n.customerphone, r.roomtype, n.roomid,n.endtime,
+n.keeptime, n.reservetime, n.remark, n.bookmoney, c.ctypename
+from ReserveInfo n join RoomType r on n.roomtypeid=r.roomtypeid
+join CustomerType c on n.customertypeid=c.customertypeid where n.state=1
+</select>
+
+
+<insert id="insertLive" parameterType="LiveInfo">
+insert into LiveInfo(liveId,roomId,customerTypeId,customerName,phone,liveTime,userIdnumber,liveMoney,state,liveNum,liveDays) values(#{liveId},#{roomId},#{customerTypeId},#{customerName},#{phone},#{liveTime},#{userIdnumber},#{liveMoney},#{state},1,1)
+</insert>
+<!-- 为净房 -->
+<update id="updateJing" parameterType="RoomInfo">
+update RoomInfo set roomStateId=2 where roomId=#{roomId}
+</update>
+<!-- 查询退房信息 -->
+<select id="selectLiveInfo" resultType="LiveInfo">
+select * from LiveInfo where roomId=#{roomId} and state=1
+</select>
+<!-- 结算 -->
+<insert id="insertCheck" parameterType="Checkout">
+insert into Checkout(checkId,liveId,realDays,userId,money,checkTime) 
+values(#{checkId},#{liveId},#{realDays},#{userId},#{money},#{checkTime})
+</insert>
+<!-- 改变入住信息表标识 -->
+<delete id="updateBiao" parameterType="LiveInfo">
+update LiveInfo set state=2 where roomId=#{roomId}
+</delete>
+<!-- 修改房间状态为脏房 -->
+<update id="updateZang" parameterType="RoomInfo">
+update RoomInfo set roomStateId=5 where roomId=#{roomId}
+</update>
+<!-- 根据房间号查找入住信息 -->
+<select id="findByRoomId" resultType="LiveInfo">
+select roomId, liveMoney from liveInfo where roomId=#{roomId} and state=1
+</select>
+<!-- 更换房间 -->
+<update id="updateLive" parameterType="com.entity.LiveInfo">
+update liveInfo set roomId=#{newRoomId}, liveMoney=#{newLiveMoney} where roomId=#{roomId}
+</update>
+
+
+	<select id="SelectProductBill" resultType="com.entity.ProductBill" parameterType="String">
+		select * from productbill where datatime=#{time}
+	</select>
+	<insert id="InsertProductBill" parameterType="com.entity.ProductBill">
+		insert into ProductBill values(#{billId},#{userId},#{jainMoney},#{datatime})
+	</insert>
+	<update id="UpdateProductBill" parameterType="com.entity.ProductBill">
+		update ProductBill set jainmoney=jainmoney+#{jainMoney} where datatime=#{datatime}
+	</update>
+	<select id="SelectProductBill2" resultType="com.entity.ProductBill">
+		select * from productbill
+	</select>
+	
+	<!-- 新增 -->
+<resultMap type="RoomInfo" id="selectXiu" autoMapping="true">
+<association property="roomState" autoMapping="true" column="roomstateid" javaType="RoomState"></association>
+</resultMap>
+<select id="selectRoomA"  resultMap="selectXiu">
+select r.roomstateid from RoomState r join roomInfo m on r.roomstateid=m.roomstateid  where m.roomId=#{roomId}
+</select>
+	
+	<select id="checkSelect"  resultType="CheckOut" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select c.checkId,c.liveId,c.realdays,c.money,c.checktime,u.names,n.roomId,n.customername,n.phone from checkout c join LiveInfo n on c.liveId=n.liveId
+join Users u on c.userid=u.userid where 1=1
+		<if test="checkId!=null and checkId!=''">
+			and c.checkId like '%'||#{checkId}||'%'
+		</if>
+		<if test="liveId!=null and liveId!=''">
+			and c.liveId like '%'||#{liveId}||'%'
+		</if>
+		<if test="customername!=null and customername!=''">
+			and n.customerName like '%'||#{customername}||'%'
+		</if>
+		order by c.checktime desc ) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+
+<select id="totalComm" parameterType="Map" resultType="int">
+		select count(c.checkId) from checkout c join LiveInfo n on c.liveId=n.liveId
+join Users u on c.userid=u.userid where 1=1
+		<if test="checkId!=null and checkId!=''">
+			and c.checkId like '%'||#{checkId}||'%'
+		</if>
+		<if test="liveId!=null and liveId!=''">
+			and c.liveId like '%'||#{liveId}||'%'
+		</if>
+		<if test="customername!=null and customername!=''">
+			and n.customerName like '%'||#{customername}||'%'
+		</if>
+	
+	</select>
+	
+	
+</mapper>

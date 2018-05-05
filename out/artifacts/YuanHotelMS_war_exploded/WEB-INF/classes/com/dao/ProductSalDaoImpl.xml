@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ProductSalDao">
+	<!-- 商品的销售 客人消费  高辉 -->
+	<select id="SelectProduct" resultType="com.entity.DepotProduct" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select d.productId,p.productname, d.producttype,d.outdepotprice,d.depotnum from DepotProduct d join ProductInfo p on d.productId=p.productId where 1=1
+<if test="q!=null and q!=''">
+	and 	p.productname like '%'||#{q}||'%'
+</if>
+) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	
+	<select id="totalComm3"  resultType="int" parameterType="Map">
+		select count(d.productId) from DepotProduct d join ProductInfo p on d.productId=p.productId where 1=1
+		<if test="q!=null and q!=''">
+			and 	p.productname like '%'||#{q}||'%'
+		</if>
+	</select>
+	
+	<!-- 损坏 客人损坏  高辉 -->
+	<select id="SelectBad2" resultType="com.entity.Bad" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select * from Bad where 1=1
+		<if test="name!=null and name!=''">
+			and BadName like '%'||#{name}||'%'
+		</if>
+		order by BadId asc) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	
+	<select id="totalComm4"  resultType="int" parameterType="Map">
+		select count(BadName) from Bad where 1=1
+		<if test="name!=null and name!=''">
+			and BadName like '%'||#{name}||'%'
+		</if>
+	</select>
+	
+	<insert id="InsertSpend" parameterType="com.entity.Spend">
+		insert into Spend values(#{spendId},#{liveId},#{userId},#{mark},#{spendTime})
+	</insert>
+	<select id="SelectLiveInfo" parameterType="String" resultType="com.entity.LiveInfo">
+		select * from LiveInfo where liveId=#{liveId}
+	</select>
+	<insert id="InsertSpendInfo" parameterType="com.entity.SpendInfo">
+		insert into SpendInfo values(#{spendInfoId},#{spendId},#{GcodeId},#{Gcodnum},#{spendMoney},#{spendTime})
+	</insert>
+	<update id="UpdateDepotProduct" parameterType="com.entity.SpendInfo">
+		update DepotProduct set depotNum=depotNum-#{Gcodnum} where productid=#{GcodeId}
+	</update>
+	<insert id="InsertBreak" parameterType="com.entity.CustomerBreak">
+		insert into CustomerBreak values(#{breakId},#{roomId},#{userId},#{remark},#{breakTime})
+	</insert>
+	<insert id="InsertBreakInfo" parameterType="com.entity.BreakDetai">
+		insert into BreakDetai values(#{detaId},#{breakId},#{breakName},#{fineMoney})
+	</insert>
+	<select id="SerchProductSalInfo"  resultType="com.entity.SpendInfo">
+		select p.productname, s.gcodnum,s.spendmoney,s.spendtime from SpendInfo s join ProductInfo p on s.GcodeId=p.productId  where s.spendid=#{spendid}
+	</select>
+	
+	
+	<!--
+	客人消费的分页
+	--><select id="SerchProductSalByChar"  resultType="com.entity.Spend" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select s.spendId,s.liveId,s.mark,s.spendTime,l.customerName, u.names from Spend s join LiveInfo l on s.liveId=l.liveId join Users u on s.userid=u.userid where 1=1
+		<if test="spendId!=null and spendId!=''">
+			and s.spendId like '%'||#{spendId}||'%'
+		</if>
+		<if test="liveId!=null and liveId!=''">
+			and s.liveId like '%'||#{liveId}||'%'
+		</if>
+		<if test="spendName!=null and spendName!=''">
+			and l.customerName like '%'||#{spendName}||'%'
+		</if>
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and s.spendTime between #{begin} and #{end}
+		</if>
+		order by s.spendTime desc ) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	
+	<!--
+	按条件获取全部的条说消费
+	--><select id="totalComm" parameterType="Map" resultType="int">
+		select count(s.spendId)from Spend s join LiveInfo l on s.liveId=l.liveId join Users u on s.userid=u.userid where 1=1
+		<if test="spendId!=null and spendId!=''">
+			and s.spendId like '%'||#{spendId}||'%'
+		</if>
+		<if test="liveId!=null and liveId!=''">
+			and s.liveId like '%'||#{liveId}||'%'
+		</if>
+		<if test="spendName!=null and spendName!=''">
+			and l.customerName like '%'||#{spendName}||'%'
+		</if>
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and s.spendTime between #{begin} and #{end}
+		</if>
+	</select>
+	
+	
+	
+	<select id="SerchBreakChar"  resultType="com.entity.CustomerBreak" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select c.breakid,c.roomid,c.remark,c.breaktime, l.customername, u.names from CustomerBreak c join LiveInfo l on c.roomId=l.liveId join Users u on c.userId=u.userId where 1=1
+		<if test="spendId!=null and spendId!=''">
+			and c.breakid like '%'||#{spendId}||'%'
+		</if>
+		<if test="liveId!=null and liveId!=''">
+			and c.roomid like '%'||#{liveId}||'%'
+		</if>
+		<if test="spendName!=null and spendName!=''">
+			and l.customerName like '%'||#{spendName}||'%'
+		</if>
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and c.breaktime between #{begin} and #{end}
+		</if>
+			 order by c.breaktime desc) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	
+	<select id="SerchBreakById"  resultType="com.entity.CustomerBreak" parameterType="String">
+		select c.breakid,c.roomid,c.remark,c.breaktime, l.customername, u.names from CustomerBreak c join LiveInfo l on c.roomId=l.liveId join Users u on c.userId=u.userId where c.roomid=#{aa}
+			 order by c.breaktime desc
+	</select>
+	
+	
+	
+		<!--
+	按条件获取全部的条说损坏
+	--><select id="totalComm2" parameterType="Map" resultType="int">
+		select count(c.breakid) from CustomerBreak c join LiveInfo l on c.roomId=l.liveId join Users u on c.userId=u.userId where 1=1
+		<if test="spendId!=null and spendId!=''">
+			and c.breakid like '%'||#{spendId}||'%'
+		</if>
+		<if test="liveId!=null and liveId!=''">
+			and c.roomid like '%'||#{liveId}||'%'
+		</if>
+		<if test="spendName!=null and spendName!=''">
+			and l.customerName like '%'||#{spendName}||'%'
+		</if>
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and c.breaktime between #{begin} and #{end}
+		</if>
+	</select>
+	
+	
+	<select id="SerchBreakInfo"  resultType="com.entity.BreakDetai" parameterType="String">
+		select * from BreakDetai where breakId=#{breakId}
+	</select>
+	
+	<select id="SerchProductSalById"  resultType="com.entity.Spend" parameterType="String">
+		select s.spendId,s.liveId,s.mark,s.spendTime,l.customerName, u.names from Spend s join LiveInfo l on s.liveId=l.liveId join Users u on s.userid=u.userid where s.liveId=#{liveid} order by s.spendTime desc
+	</select>
+	
+	
+	<insert id="InsertSpendProdut" parameterType="com.entity.SpendProdut">
+		insert into SpendProdut values(#{spendId},#{userId},#{productId},#{productNum},#{productMoney},#{spendDate})
+	</insert>
+	
+	
+	<select id="SerchSpendProdut"  resultType="com.entity.SpendProdut" parameterType="Map">
+		select p.productname,sum(s.productNum) productNum from SpendProdut s,ProductInfo p where s.productId=p.productId
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and s.spenddate between #{begin} and #{end}
+		</if>
+		group by s.productId, p.productname
+	</select>
+	
+	
+	<select id="selectjin" parameterType="String" resultType="int">
+		select depotPrice from depotproduct where productId=#{productid}
+	</select>
+	<select id="SelectProductBill" resultType="com.entity.ProductBill" parameterType="String">
+		select * from productbill where datatime=#{time}
+	</select>
+	<insert id="InsertProductBill" parameterType="com.entity.ProductBill">
+		insert into ProductBill values(#{billId},#{userId},#{jainMoney},#{datatime})
+	</insert>
+	<update id="UpdateProductBill" parameterType="com.entity.ProductBill">
+		update ProductBill set jainmoney=jainmoney+#{jainMoney} where datatime=#{datatime}
+	</update>
+	<select id="SelectProductBill2" resultType="com.entity.ProductBill" parameterType="Map">
+		select * from productbill where datatime between #{begin} and #{end} order by datatime
+	</select>
+	
+	
+	<select id="SelectBad" resultType="com.entity.Bad" parameterType="Map">
+		select * from Bad where 1=1
+		<if test="name!=null and name!=''">
+			and BadName like '%'||#{name}||'%'
+		</if>
+		order by BadId asc
+	</select>
+	
+	<insert id="AddBad" parameterType="com.entity.Bad" >
+		insert into Bad values(Bad_id.nextval,#{BadName},#{Money})
+	</insert>
+	<update id="UpdateBad" parameterType="com.entity.Bad">
+		update Bad set BadName=#{BadName}, Money=#{Money} where BadId=#{BadId}
+	</update>
+	<delete id="deleteBad" parameterType="int">
+		delete from Bad where BadId=#{BadId}
+	</delete>
+	
+	<insert id="insertjiaojie" parameterType="com.entity.JiaoJie">
+		insert into jaojie values(#{jiaoid},#{userId},#{beizhu},#{jtime},#{biaoshi},#{xiuname},#{xiutime})
+	</insert>
+
+	
+	<select id="Serchjiaojie"  resultType="com.entity.JiaoJie" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select j.jiaoid,j.userId,u.names,j.beizhu,j.jtime,j.biaoshi,j.xiuname,j.xiutime from jaojie j join users u on j.userId=u.userId where 1=1
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and j.xiutime between #{begin} and #{end}
+		</if>
+		<if test="spendName!=null and spendName!=''">
+			and u.names like like '%'||#{spendName}||'%'
+		</if>
+		<if test="pan!=null and pan!=''">
+			and j.biaoshi='有'
+		</if>
+			 order by j.jtime desc) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	
+	<select id="totalComm5" parameterType="Map" resultType="int">
+		select count(j.jiaoid) from jaojie j join users u on j.userId=u.userId where 1=1
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and j.xiutime between #{begin} and #{end}
+		</if>
+		<if test="spendName!=null and spendName!=''">
+			and u.names like like '%'||#{spendName}||'%'
+		</if>
+	</select>
+	<select id="Serchjiaojiexi" parameterType="String" resultType="com.entity.JiaoJie">
+		select j.jiaoid,j.userId,u.names,j.beizhu,j.jtime,j.biaoshi,j.xiuname,j.xiutime from jaojie j join users u on j.userId=u.userId where j.jiaoid=#{jiaoid}
+	</select>
+	<update id="updatejiaojiexi" parameterType="com.entity.JiaoJie">
+		update jaojie set biaoshi='无',xiuname=#{xiuname},xiutime=#{xiutime} where jiaoid=#{jiaoid}
+	</update>
+	
+	
+	<select id="SelectProductBill3" resultType="com.entity.ProductBill" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select * from productbill where datatime between #{begin} and #{end} 
+order by datatime) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	
+	<select id="totalComm6" parameterType="Map" resultType="int">
+		select count(datatime) from productbill where datatime between #{begin} and #{end} 
+	</select>
+	
+	<select id="SerchProductying"  resultType="com.entity.Spend" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select s.spendId,s.liveId,s.mark,s.spendTime,l.customerName, u.names from Spend s join LiveInfo l on s.liveId=l.liveId join Users u on s.userid=u.userid where s.spendTime between #{begin} and #{end} order by s.spendTime desc) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	
+	<select id="totalComm7"  resultType="int" parameterType="Map">
+		select count(s.spendId) from Spend s join LiveInfo l on s.liveId=l.liveId join Users u on s.userid=u.userid where s.spendTime between #{begin} and #{end}
+	</select>
+	
+	
+	<select id="selectjie"  resultType="com.entity.Checkout" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select * from Checkout where checkTime between #{begin} and #{end} order by checkTime desc) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	<select id="totalComm8"  resultType="int" parameterType="Map">
+		select count(checkId) from Checkout where checkTime between #{begin} and #{end}
+	</select>
+	
+	<select id="selecttui"  resultType="com.entity.ReturnProduct" parameterType="Map">
+		SELECT * FROM  (  
+SELECT C.*, ROWNUM RN  
+FROM (select * from ReturnProduct where returnDate between #{begin} and #{end} order by returnDate desc) C 
+WHERE ROWNUM&lt;=#{b}
+)  
+WHERE RN&gt;#{a}
+	</select>
+	<select id="totalComm9"  resultType="int" parameterType="Map">
+		select count(returnId) from ReturnProduct where returnDate between #{begin} and #{end}
+	</select>
+	<select id="selecttuiming" parameterType="String" resultType="com.entity.ReturnProductDetail">
+		select p.productname returnId, r.returnnum,r.price, r.totalmoney,r.returnmoney from ReturnProductDetail r join ProductInfo p ON r.productId=p.productId where r.returnId=#{returnId}
+	</select>
+</mapper>

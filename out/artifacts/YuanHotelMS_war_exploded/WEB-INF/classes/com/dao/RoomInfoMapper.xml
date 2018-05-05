@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RoomInfoDao">
+
+<!-- 增加房间类型 -->
+<insert id="insertRT" parameterType="com.entity.RoomType">
+insert into RoomType values(seq_c.nextval,#{roomType},#{roomPrice},#{money},#{bookMoney},#{roomMark})
+</insert>
+<!-- 增加房间信息 -->
+<insert id="insertRoom" parameterType="com.entity.RoomInfo">
+insert into RoomInfo values(#{roomId},#{roomTypeId},#{floor},#{roomStateId},#{roomPhone},#{roomBuild},#{stateTime})
+</insert>
+<!-- 查看房间状态 -->
+<select id="findAllRS" resultType="com.entity.RoomState">
+select * from RoomState
+</select>
+<!--根据编号查找房间类型  -->
+<select id="findRTById" parameterType="int" resultType="com.entity.RoomType">
+select * from RoomType where roomTypeId=#{roomTypeId}
+</select>
+<!-- 查看所有房间类型 -->
+<select id="findAllRT" resultType="com.entity.RoomType">
+select * from RoomType
+</select>
+<!-- 根据房间编号查找房间信息 -->
+<select id="findRoomById" parameterType="int" resultMap="room">
+select ri.roomid,rt.roomtype,rt.roomPrice, ri.roombuild,ri.floor,rs.roomstate,ri.roomphone, ri.statetime
+from roomInfo ri join roomType rt on ri.roomtypeid=rt.roomtypeid 
+join roomState rs on ri.roomstateid= rs.roomstateid where ri.roomId=#{roomId}
+</select>
+<!-- 一对多 -->
+<resultMap type="RoomInfo" id="room" autoMapping="true">
+<association property="roomState" javaType="com.entity.RoomState" column="roomStateId" autoMapping="true"></association>
+<association property="RoomType" javaType="com.entity.RoomType" column="roomTypeId" autoMapping="true"></association>
+</resultMap>
+
+<!-- 查看所有房间信息 -->
+<select id="findAllRoom" resultMap="room">
+select ri.roomid,rt.roomtype,rt.roomPrice, ri.roombuild,ri.floor,rs.roomstate,ri.roomphone, ri.statetime
+from roomInfo ri join roomType rt on ri.roomtypeid=rt.roomtypeid 
+join roomState rs on ri.roomstateid= rs.roomstateid and ri.stateTime=1 order by roomId 
+</select>
+<!-- 按楼栋查找房间信息 -->
+<select id="findByBuild" resultMap="room">
+select ri.roomid,rt.roomtype from roomInfo ri join roomType rt on ri.roomtypeid=rt.roomtypeid 
+where roomBuild=#{roomBuild} and stateTime=1
+</select>
+<!--按楼栋和楼层查找房间信息-->
+<select id="findbyBF" resultMap="room">
+select ri.roomid,rt.roomtype from roomInfo ri join roomType rt on ri.roomtypeid=rt.roomtypeid where
+ roomBuild=#{0} and floor=#{1} and stateTime=1
+</select>
+<!-- 按房类查找房间信息 -->
+<select id="findbyRoomType" resultMap="room" parameterType="Map">
+select ri.roomid,rt.roomtype,rt.roomPrice, ri.roombuild,ri.floor,rs.roomstate,ri.roomphone, ri.statetime
+from roomInfo ri join roomType rt on ri.roomtypeid=rt.roomtypeid 
+join roomState rs on ri.roomstateid=rs.roomstateid where ri.stateTime=1
+<if test="roomTypeId!=null and roomTypeId!=0">
+ and rt.roomTypeId=#{roomTypeId}
+</if>
+ order by roomId 
+</select>
+
+
+
+
+
+
+
+<!-- 按房态查找房间信息 -->
+<select id="findbyRoomState" resultMap="room">
+select ri.roomid,rt.roomtype from roomInfo ri join roomType rt on ri.roomtypeid=rt.roomtypeid join roomState rs 
+on ri.roomStateId=rs.roomStateId where rs.roomStateId=#{roomStateId} and stateTime=1
+</select>
+<!-- 修改房间类型 -->
+<update id="updateRT" parameterType="com.entity.RoomType">
+update RoomType set roomType=#{roomType},roomPrice=#{roomPrice},money=#{money},bookMoney=#{bookMoney},
+roomMark=#{roomMark} where roomTypeId=#{roomTypeId}
+</update>
+<!--修改房间信息  -->
+<update id="updateRoom" parameterType="com.entity.RoomInfo">
+update RoomInfo set roomTypeId=#{roomTypeId},roomStateId=#{roomStateId}, roomPhone=#{roomPhone} where roomId=#{roomId}
+</update>
+<!-- 删除房间类型 -->
+<delete id="deleteRT" parameterType="int">
+delete from RoomType where roomTypeId=#{roomTypeId} 
+</delete>
+<!-- 删除房间信息 -->
+<delete id="deleteRoom" parameterType="int">
+update RoomInfo set stateTime=0 where roomId=#{roomId}
+</delete>
+<!-- 一对多 -->
+<resultMap type="RoomInfo" id="live" autoMapping="true">
+<association property="roomType" javaType="com.entity.RoomType" column="roomTypeId" autoMapping="true"></association>
+<association property="liveinfo" javaType="com.entity.LiveInfo" column="liveId" autoMapping="true"></association>
+</resultMap>
+<!-- 查看在住账单 -->
+<select id="findLiveBill" resultMap="live">
+select ri.roomid, rt.roomprice, l.livedays, l.livemoney from roominfo ri join roomtype rt
+on ri.roomtypeid=rt.roomtypeid join liveinfo l on ri.roomid=l.roomid where ri.roomid=#{roomId}
+</select>
+<!-- 查询某楼栋和某楼层所在的最大房间号 -->
+<select id="findRoomId" resultType="String" parameterType="int">
+select max(roomid) from roominfo where  roomBuild=#{0} and floor=#{1} and stateTime=1
+</select>
+</mapper>

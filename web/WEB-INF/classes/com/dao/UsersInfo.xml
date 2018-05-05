@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UsersInfo">
+
+
+<select id="findAllUsers" resultType="Users">
+select u.userid,u.userpwd, u.names, u.userfla,u.phone, u.address,u.usersex, u.state, u.state,u.usersroleid, m.rolename from Users u, myrole m 
+where u.usersRoleId=m.roleid and u.state=1
+</select>
+<!-- 条件查询 -->
+<select id="findAllByUsers" resultType="Users" parameterType="Map">
+select u.userid,u.userpwd, u.names, u.userfla,u.phone, u.address,u.usersex, u.state, u.state,u.usersroleid, m.rolename from Users u, myrole m 
+where u.usersRoleId=m.roleid and u.state=1
+<if test="names!=null and names!=''">
+ and u.names=#{names}
+</if>
+<if test="usersRoleId!=null and usersRoleId!=0">
+ and u.usersRoleId=#{usersRoleId}
+</if>
+</select>
+
+<select id="findUsersById" resultType="Users" parameterType="int">
+select u.userid,u.userpwd, u.names, u.userfla,u.phone, u.address,u.usersex, u.state,u.usersroleid, m.rolename from Users u, myrole m 
+where u.usersRoleId=m.roleid and u.userId=#{userId}
+</select>
+
+<insert id="addUsers" parameterType="Users">
+insert into Users(userid,userpwd,names,userfla,phone,address,usersex,state,usersroleid) 
+values(seq_bb.nextval,#{userPwd},#{names},#{userFla},#{phone},#{address},#{userSex},#{state},#{usersRoleId})
+</insert>
+
+<update id="updateUsers" parameterType="Users">
+update Users 
+ <set>
+     	<if test="userPwd!=null">
+     	userPwd= #{userPwd},
+     	</if>
+     	<if test="names!=null">
+     	names= #{names},
+     	</if>
+     	<if test="userFla!=null">
+     	userFla= #{userFla},
+     	</if>
+     	<if test="phone!=null">
+     	phone= #{phone},
+     	</if>
+     	<if test="address!=null">
+     	address= #{address},
+     	</if>
+     	<if test="userSex!=null">
+     	userSex= #{userSex},
+     	</if>
+     	<if test="usersRoleId!=null">
+     	usersRoleId= #{usersRoleId}
+     	</if>
+     </set>
+      where userId=#{userId}
+</update>
+
+<update id="updateUsersByid" parameterType="int">
+update Users set state=0 where userId=#{userId}
+</update>
+
+<select id="findAllMyRole" resultType="MyRole">
+select *from myRole
+</select>
+
+
+</mapper>

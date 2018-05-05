@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PurchasePayDao">
+	<insert id="AddPurchasePay" parameterType="com.entity.PurchasePay">
+			insert into PurchasePay values(#{payId},#{payTime},#{payMoney},#{payStyle},#{userId},#{userIdS},#{checkState},#{purchasPayOthers})
+	</insert>
+	
+	<insert id="AddPurchasePayDetail" parameterType="com.entity.PurchasePayDetail">
+			insert into PurchasePayDetail values(#{payDetaId},#{payId},#{orderId})
+	</insert>
+	
+	<select id="FindPurchasePay" resultType="com.entity.PurchasePay" parameterType="Map">
+select p.payid,o.orderid,p.paytime,p.paymoney,p.checkstate,u.names as names,s.names as namec from purchasepay p 
+join users u on p.userid=u.userid join users s on p.userids=s.userid
+join purchasepaydetail d on d.payid=p.payid join purchaseorder o on d.orderid=o.orderid
+			<if test="begin!=null and begin!='' and end!=null and end!=''">
+			and payTime between #{begin} and #{end}
+		</if>
+		<if test="spanid!=null and spanid!=''">
+		and payid like '%'||#{spanid}||'%'
+		</if>
+		<if test="start!=null and start!=''">
+		and checkstate=#{start}
+		</if> 
+	</select>
+	<select id="FindPurchasePayDetail" resultType="com.entity.PurchasePayDetail" parameterType="String">
+			select * from PurchasePayDetail where payId=#{payId}
+	</select>
+	<update id="updatePay" parameterType="com.entity.PurchasePay">
+		update purchasePay set payStyle=#{payStyle},checkState=#{checkState} where payId=#{payId}
+	</update>
+	<update id="updateOrder" parameterType="com.entity.PurchaseOrder">
+		update PurchaseOrder set moneyType=#{MoneyType},address=#{address},state=#{state} where orderId=#{orderId}
+	</update>
+</mapper>

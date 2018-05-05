@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.ProductInfoDao">
+<!-- 查找所有 -->
+<select id="findAllP" resultType="ProductInfo">
+select productId,productName,productAddress,buyPrice,retailoPrice,productSort,productUction from productinfo where state=0
+</select>
+
+<!-- 查找下架商品-->
+<select id="findAllP1" resultType="ProductInfo">
+select productId,productName,productAddress,buyPrice,retailoPrice,productSort,productUction from productinfo where state=1
+</select>
+
+<!-- 根据id查找 -->
+<select id="findByIdP" resultType="ProductInfo" parameterType="String">
+select productId,productName,productAddress,buyPrice,retailoPrice,productSort,productUction from ProductInfo where productId=#{productId}
+</select>
+
+<!-- 根据id查找 -->
+<select id="findByIdState" resultType="ProductInfo" parameterType="String">
+select state from ProductInfo where productId=#{productId}
+</select>
+
+<!-- 根据Name查找 -->
+<select id="findName" resultType="ProductInfo" parameterType="String">
+select productId,productName,productAddress,buyPrice,retailoPrice,productSort,productUction from ProductInfo 
+where productName like '%'||#{productName}||'%' and state=0
+</select>
+<!-- 根据Name查找 -->
+<select id="findNameT" resultType="ProductInfo" parameterType="String">
+select productId,productName,productAddress,buyPrice,retailoPrice,productSort,productUction from ProductInfo 
+where productName like '%'||#{productName}||'%' and state=1
+</select>
+
+<!-- 增 -->
+<insert id="insertP" parameterType="ProductInfo">
+insert into ProductInfo values(#{productId},#{productName},#{productAddress},#{buyPrice},#{retailoPrice},#{productSort},#{state},#{productUction})
+</insert>
+
+<!-- 添加库存 -->
+<insert id="insertD" parameterType="DepotProduct">
+insert into  depotproduct values(#{depotPId},#{productId},#{productType},#{depotNum},#{totalMoney},#{depotId},#{depotPrice},#{outDepotPrice},#{jainMoney},#{minDepotNum},#{maxDepotNum})
+</insert>
+
+<!-- 删-->
+<delete id="deleteP" parameterType="ProductInfo">
+delete from ProductInfo where productId=#{productId}
+</delete>
+<!-- 改 -->
+<update id="updateP" parameterType="ProductInfo">
+update ProductInfo set productId=#{productId}, productName=#{productName},productAddress=#{productAddress},buyPrice=#{buyPrice},retailoPrice=#{retailoPrice},productSort=#{productSort},ProductUction=#{productUction}
+ where productId=#{productId}
+</update>
+
+<!-- 修改状态 -->
+<update id="updateState" parameterType="ProductInfo" >
+update ProductInfo set state=1 where productId=#{productId}
+</update>
+<!-- 修改状态 -->
+<update id="updateStateT" parameterType="ProductInfo" >
+update ProductInfo set state=0 where productId=#{productId}
+</update>
+</mapper>

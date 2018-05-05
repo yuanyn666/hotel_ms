@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.ReturnProductDao">
+
+<select id="findproducts" resultType="com.entity.ProductInfo">
+	select * from productinfo
+</select>
+
+<insert id="AddReturnProduct" parameterType="com.entity.ReturnProduct">
+	insert into returnProduct values(#{returnId}, #{returnDate},#{returnStyle},#{userId},#{userIdS},#{mark})
+</insert>
+
+<insert id="AddReturnProductDetail" parameterType="com.entity.ReturnProductDetail">
+	insert into ReturnProductDetail values(#{returnId},#{productId},#{returnNum},#{price},#{totalMoney},#{returnMoney})
+</insert>
+
+<select id="findDetProduct" resultType="com.entity.DepotProduct" parameterType="String">
+		select * from depotProduct where productId=#{productId}
+</select>
+
+<update id="updateDeProduct" parameterType="com.entity.DepotProduct">
+		update depotProduct set depotNum=#{depotNum},totalMoney=#{totalMoney} where productId=#{productId}
+</update>
+
+
+<select id="FindsRetProduct"  resultType="com.entity.ReturnProduct" parameterType="Map">
+		select * from returnProduct where 1=1
+		<if test="begin!=null and begin!='' and end!=null and end!=''">
+		 and returnDate  between #{begin} and #{end}
+		</if>
+</select>
+<select id="FindsRetProductDetail" parameterType="String" resultType="com.entity.ReturnProductDetail">
+		select * from returnProductDetail where returnId=#{returnId}
+</select>  
+
+
+	<select id="SelectProductBill" resultType="com.entity.ProductBill" parameterType="String">
+		select * from productbill where datatime=#{time}
+	</select>
+	<insert id="InsertProductBill" parameterType="com.entity.ProductBill">
+		insert into ProductBill values(#{billId},#{userId},#{jainMoney},#{datatime})
+	</insert>
+	<update id="UpdateProductBill" parameterType="com.entity.ProductBill">
+		update ProductBill set jainmoney=jainmoney+#{jainMoney} where datatime=#{datatime}
+	</update>
+</mapper>

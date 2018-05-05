@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.SuperCustomerDao">
+<!-- 增加会员 -->
+<insert id="insertSuper" parameterType="SuperCustomer">
+insert into supercustomer(spId,spname,spSex,spAddress,spPhone,spCardType,spCardId,balance,integration,state,mark) 
+values(#{spId},#{spName},#{spSex},#{spAddress},#{spPhone},#{spCardType},#{spCardId},#{balance},#{integration},#{state},#{mark})
+</insert>
+<!-- 删除会员 -->
+<delete id="deleteSuper" parameterType="String">
+update superCustomer set state=0 where spid=#{spId}
+</delete>
+<!--  修改会员-->
+<update id="updateSuper" parameterType="SuperCustomer">
+update superCustomer set spSex=#{spSex}, spaddress=#{spAddress},spphone=#{spPhone},
+spCardType=#{spCardType},spCardId=#{spCardId},mark=#{mark} where spid=#{spId}
+</update>
+<!--  查找会员-->
+<select id="findAllSuper" resultType="SuperCustomer">
+select spid, spname, spsex, spaddress, spphone, spcardtype, spcardid,balance, integration, mark,state from superCustomer where state=1
+</select>
+<!-- 根据会员卡号精确查找 -->
+<select id="findBySuperId" resultType="SuperCustomer">
+select spid, spname, spsex, spaddress, spphone, spcardtype, spcardid, balance, integration,mark,state from superCustomer where spid=#{spId}
+</select>
+<!-- 根据会员卡号模糊查找 -->
+<select id="findBySpId" resultType="SuperCustomer">
+select spid, spname, spsex, spaddress, spphone, spcardtype, spcardid, balance, integration,mark,state from superCustomer 
+where spid like '%'||#{spId}||'%' and state=1
+</select>
+<!-- 会员充值 -->
+<update id="insertMoney" parameterType="SuperCustomer">
+update superCustomer set balance=balance+#{newMoney},integration=integration+#{newJF} where spId=#{spId}
+</update>
+</mapper>

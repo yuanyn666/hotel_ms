@@ -10,7 +10,7 @@ select *from Users where state=1 and names=#{names} and userPwd=#{userPwd}
 
 
 <select id="loginCheckKuCun" resultType="Users" parameterType="Users">
-select *from users where state=1 and usersroleid=4 
+select *from users where state=1 and usersroleid=3
 and names=#{names} and userpwd=#{userPwd}
 
 </select>

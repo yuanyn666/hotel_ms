@@ -61,7 +61,7 @@ body {
   <label for="inputPassword" class="control-label" style="float: left;margin-left: 100px">客户姓名：</label>
   <input type="text" value="${name}" readonly="readonly" name="Spnedid" class="form-control" style="width: 100px;float: left;"/>
   
-  <label for="inputPassword" class="control-label" style="float: left;margin-left: 120px" value="${myNames}">操作人：</label><input type="hidden" name="userId" value="${myUsers.userId }"/>
+  <label class="control-label" style="float: left;margin-left: 120px" value="${myNames}">操作人：</label><input type="hidden" name="userId" value="${myUsers.userId }"/>
   
   <input type="text" value="${myNames }" readonly="readonly" name="name" class="form-control" style="width: 100px;float: left;"/>
   <input type="hidden" value="${liveid}" name="liveid" name="liveid" />

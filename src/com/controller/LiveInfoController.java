@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -273,23 +274,33 @@ public class LiveInfoController {
 	}
 
 	@RequestMapping("/jie")
-	public String jie(Model model,Checkout checkOut,int roomId){
+	public String jie(Model model, Checkout checkOut, int roomId){
+		System.out.println("-----------------进入结算Controller------------------------");
 		int result=liveService.insertCheck(checkOut);
 		if(result>0){
 			liveService.updateZang(roomId);
 			liveService.updateBiao(roomId);
 			SimpleDateFormat df3=new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat df2=new SimpleDateFormat("yyyyMMddHHmmss");
-			String time3=df3.format(new Date());//新建一个时间
-			int jainMoney=checkOut.getMoney();//获取结账的房费总额
-			int nn=2;//操作人id 后期在session中获取
-			List<ProductBill> list5=liveService.SelectProductBill(time3);//先根据时间查询一下看看今天是不是啊已经有盈利了
-			if(list5.size()!=0){//如果已经有了就实现修改，如果没有就实现录入
+			//新建一个时间
+			String time3=df3.format(new Date());
+			//获取结账的房费总额
+			int jainMoney=checkOut.getMoney();
+			//操作人id 后期在session中获取
+			int userId = checkOut.getUserId();
+			System.out.println("-------------" + userId + "---------------");
+			//先根据时间查询，今天是否已经存在盈利记录
+			List<ProductBill> list5=liveService.SelectProductBill(time3);
+			//如果已经存在就实现修改，佛则就录入盈利记录
+			if (list5.size()!=0) {
 				ProductBill bill=new ProductBill(jainMoney,time3);
-				liveService.UpdateProductBill(bill);//创建一个修改+=盈利的实体对象
-			}else{
-				String aa="bill"+df2.format(new Date());//生成盈利编号
-				ProductBill bill=new ProductBill(aa,nn,jainMoney,time3);//创建一个盈利的实体对象
+				//创建一个修改+=盈利的实体对象
+				liveService.UpdateProductBill(bill);
+			} else {
+				//生成盈利编号
+				String billId = "bill" + df2.format(new Date());
+				//创建一个盈利的实体对象
+				ProductBill bill=new ProductBill(billId, userId, jainMoney, time3);
 				liveService.InsertProductBill(bill);
 			}
 				/*List<ProductBill> list6=liveService.SelectProductBill(time3);

@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'login.jsp' starting page</title>
+    <title>同福客栈</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -45,7 +45,7 @@ margin-left: 35px;
   
   <body>
  <div class="wrapper">
-			<h1>同福酒店管理系统</h1>
+			<h1>同福客栈管理系统</h1>
 			<h2>TongFuHotelMS</h2>
 			<div class="content">
 				<div id="form_wrapper" class="form_wrapper" >

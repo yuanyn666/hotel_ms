@@ -87,9 +87,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div id="radio" style="margin-left: 20px;">
 <span style="font-size: 20px;">选择收货地址:</span>
-<input type="radio" name="address" value="河南省新乡市红旗区新乡职业技术学院第一仓库">河南省新乡市红旗区新乡职业技术学院第一仓库<br/>
+<input type="radio" name="address" value="河南省郑州市郑州大学北校区123宿舍第一床位">河南省郑州市郑州大学北校区123宿舍第一床位<br/>
 <span style="margin-left: 130px;">
-<input type="radio" name="address" value="河南省新乡市红旗区新乡职业技术学院第二仓库">河南省新乡市红旗区新乡职业技术学院第二仓库
+<input type="radio" name="address" value="河南省郑州市郑州大学科学大道100号">河南省郑州市郑州大学科学大道100号
 </span>
 </div>
 <input type="hidden" value="支付宝" id="text1" name="types">

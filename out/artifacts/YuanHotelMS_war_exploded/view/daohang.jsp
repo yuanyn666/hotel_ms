@@ -75,7 +75,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="news-holder cf">
 
     <ul class="news-headlines">
-      <li class="selected">登录系统</li>
+      <li class="selected">FAQ疑难问题</li>
+      <li>登录系统</li>
       <li>进入到主页面</li>
       <li>客人入住？</li>
       <li>查询在住客人？</li>
@@ -104,11 +105,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="news-preview">
 
       <div class="news-content top-content">
+      <p><a href="javascript:kk()">FAQ疑难问题</a></p>
+        <p>同福酒店管理系统FAQ疑难问题</p>
+      </div><!-- .news-content -->
+
+      <div class="news-content top-content">
       <p><a href="javascript:kk()">登录系统</a></p>
         <img src="images/01.png">
         <p>A hundred red bicycles were stolen from under our noses yesterday, and nobody knows what went wrong.</p>
       </div><!-- .news-content -->
-
 
       <div class="news-content">
       <p><a href="javascript:kk()">进入到主页面</a></p>

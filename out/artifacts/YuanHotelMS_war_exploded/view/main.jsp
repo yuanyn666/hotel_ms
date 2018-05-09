@@ -147,7 +147,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			float:right;
 			margin-right:150px;
 			height: 30px;
-			width: 80px;
+			width: 200px;
 			margin-top:-35px;
 			background: #74adaa;
 
@@ -189,11 +189,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<a class="three-d" >帮助中心 <span class="three-d-box"><span class="front">帮助中心 </span><span class="back">帮助中心 </span></span> </a>
 						<ul class="clearfix unstyled drop-menu" id="p6"></ul>
 					</li>
+					<li>
+						<a href="logout" class="three-d">登出</a>
+						<ul class="clearfix unstyled drop-menu" id="p7"></ul>
+					</li>
 				</ul>
 			</div>
 		</section>
 	</div>
-	<span id="lo">登录人 :${myNames}</span>
+	<span id="lo">登录人 :${myNames}&nbsp;</span>
 
 	<div>
 		<input type="hidden" id="usersRoleId" value="${myUsers.usersRoleId}"/>
@@ -214,9 +218,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	</div>
 
-	<div style="width: 100%; height: 50px; line-height: 50px; text-align: center; clear: both; position: absolute; bottom: 0px;">
+	<%--<div style="width: 100%; height: 50px; line-height: 50px; text-align: center; clear: both; position: absolute; bottom: 0px;">
 		同福系统感谢您的使用，同福方便你我他！
-	</div>
+	</div>--%>
 </body>
 <script type="text/javascript">
 	$(function(){
@@ -256,7 +260,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 				<!-- 帮助中心权限 -->
 				if(data[i].rightTip=="帮助中心") {
-				    $("#teststyle").attr('style', 'display: none');
 					$("#p6").append("<li><a href='"+data[i].rightUrl+"' target='main' class='three-d'> "+data[i].ringhtText+" <span class='three-d-box'><span class='front'>"+data[i].ringhtText+"</span><span class='back'>"+data[i].ringhtText+" </span></span> </a></li>");
 				}
 			}

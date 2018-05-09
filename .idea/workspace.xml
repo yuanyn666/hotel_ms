@@ -7,16 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7325661b-39fb-40a6-9711-815cc2efa26f" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/com/controller/LogoutController.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/web/image/ft_logo1.jpg" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/index.jsp" afterPath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/index.jsp" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/view/daohang.jsp" afterPath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/view/daohang.jsp" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/view/main.jsp" afterPath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/view/main.jsp" />
-      <change beforePath="$PROJECT_DIR$/web/index.jsp" afterPath="$PROJECT_DIR$/web/index.jsp" />
-      <change beforePath="$PROJECT_DIR$/web/view/daohang.jsp" afterPath="$PROJECT_DIR$/web/view/daohang.jsp" />
-      <change beforePath="$PROJECT_DIR$/web/view/main.jsp" afterPath="$PROJECT_DIR$/web/view/main.jsp" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -88,8 +79,8 @@
       <file leaf-file-name="LogoutController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/controller/LogoutController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" column="34" lean-forward="false" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+            <state relative-caret-position="361">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -536,12 +527,12 @@
       <workItem from="1525695082098" duration="866000" />
       <workItem from="1525696526877" duration="7868000" />
       <workItem from="1525786555201" duration="3892000" />
-      <workItem from="1525874604783" duration="7187000" />
+      <workItem from="1525874604783" duration="7297000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28363000" />
+    <option name="totallyTimeSpent" value="28473000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -668,14 +659,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/controller/ProductSalController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="98" column="33" lean-forward="true" selection-start-line="98" selection-start-column="33" selection-end-line="98" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/controller/Reporting.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1070,10 +1053,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="544" column="55" lean-forward="true" selection-start-line="544" selection-start-column="55" selection-end-line="544" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/controller/LogoutController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="34" lean-forward="false" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+        <state relative-caret-position="361">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

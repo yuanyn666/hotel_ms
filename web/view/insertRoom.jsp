@@ -60,9 +60,6 @@ margin-left: 320px;
   </head>
   <body>   
    <form action="insertRoom" method="post" onsubmit="return myCheck()">
-   <c:forEach items="${list}" var="r">
-   <input type="hidden" value="${r.roomId}" class="rId"/>
-   </c:forEach>
     <table class="table table-striped table-hover tw">
     <tr><td colspan="2" style="text-align: center;">添加房间
      <a href="showRoomInfo" id="reset" class="btn btn-primary">取消添加</a></td></tr>

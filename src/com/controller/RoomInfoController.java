@@ -133,7 +133,7 @@ public class RoomInfoController {
 		List<RoomInfo> roomRT=rs.findbyType(map);
 		List<RoomType> rtlist=rs.findAllRT();
 		model.addAttribute("rtlist", rtlist);
-		model.addAttribute("roomRT", roomRT);
+		model.addAttribute("list", roomRT);
 		return "showRoom";
 	}
 	//按房间状态查询房间信息

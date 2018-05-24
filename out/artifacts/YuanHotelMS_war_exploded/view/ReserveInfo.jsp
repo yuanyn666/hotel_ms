@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td>${s.customerPhone }</td>
 		<td>${s.roomtype.roomType}</td>
 		<td>${s.roomId }</td>
-		<td>${endTime }</td>
+		<td>${s.endTime }</td>
 		<td>${s.keepTime }</td>
 		<td>${s.reserveTime }</td>
 		<td>${s.bookMoney }</td>

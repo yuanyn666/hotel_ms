@@ -7,10 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7325661b-39fb-40a6-9711-815cc2efa26f" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/view/LiveInfo.jsp" afterPath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/view/LiveInfo.jsp" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/view/main1.jsp" afterPath="$PROJECT_DIR$/out/artifacts/YuanHotelMS_war_exploded/view/main1.jsp" />
-      <change beforePath="$PROJECT_DIR$/web/view/main1.jsp" afterPath="$PROJECT_DIR$/web/view/main1.jsp" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,16 +20,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Bad.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/view/Bad.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="login.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/login.jsp">
           <provider selected="true" editor-type-id="text-editor">
@@ -57,8 +45,8 @@
       <file leaf-file-name="main1.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/view/main1.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="404" column="56" lean-forward="true" selection-start-line="404" selection-start-column="56" selection-end-line="404" selection-end-column="56" />
+            <state relative-caret-position="362">
+              <caret line="412" column="10" lean-forward="true" selection-start-line="412" selection-start-column="10" selection-end-line="412" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -181,7 +169,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/entity/CustomerBreak.java" />
         <option value="$PROJECT_DIR$/src/com/entity/CustomerType.java" />
         <option value="$PROJECT_DIR$/src/com/entity/DepotInfo.java" />
         <option value="$PROJECT_DIR$/src/com/entity/LiveInfo.java" />
@@ -232,6 +219,7 @@
         <option value="$PROJECT_DIR$/web/view/LiveInfo.jsp" />
         <option value="$PROJECT_DIR$/src/com/controller/RoomISTController.java" />
         <option value="$PROJECT_DIR$/web/view/main1.jsp" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -281,50 +269,7 @@
             <path>
               <item name="YuanHotelMS" type="b2602c69:ProjectViewProjectNode" />
               <item name="YuanHotelMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YuanHotelMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YuanHotelMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YuanHotelMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YuanHotelMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YuanHotelMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YuanHotelMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YuanHotelMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YuanHotelMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YuanHotelMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YuanHotelMS" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YuanHotelMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YuanHotelMS" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="YuanHotelMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="YuanHotelMS" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -545,7 +490,7 @@
       <workItem from="1526391634127" duration="2021000" />
       <workItem from="1526696373457" duration="3884000" />
       <workItem from="1526990014568" duration="900000" />
-      <workItem from="1527170896048" duration="12494000" />
+      <workItem from="1527170896048" duration="12783000" />
     </task>
     <task id="LOCAL-00001" summary="客户预订页面，预抵时间展示问题">
       <created>1527172853661</created>
@@ -561,11 +506,18 @@
       <option name="project" value="LOCAL" />
       <updated>1527188781940</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="在住人信息，修改为入住房间数">
+      <created>1527189286732</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1527189286732</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54971000" />
+    <option name="totallyTimeSpent" value="55260000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -680,7 +632,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="客户预订页面，预抵时间展示问题" />
     <MESSAGE value="退房金额结算调整" />
-    <option name="LAST_COMMIT_MESSAGE" value="退房金额结算调整" />
+    <MESSAGE value="在住人信息，修改为入住房间数" />
+    <option name="LAST_COMMIT_MESSAGE" value="在住人信息，修改为入住房间数" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -697,20 +650,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/controller/LogoutController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="41" lean-forward="true" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/datagrid-detailview.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/view/FindStiorages.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
@@ -1090,10 +1029,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="47" lean-forward="true" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="3" lean-forward="false" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/view/main1.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="404" column="56" lean-forward="true" selection-start-line="404" selection-start-column="56" selection-end-line="404" selection-end-column="56" />
+        <state relative-caret-position="362">
+          <caret line="412" column="10" lean-forward="true" selection-start-line="412" selection-start-column="10" selection-end-line="412" selection-end-column="10" />
           <folding />
         </state>
       </provider>

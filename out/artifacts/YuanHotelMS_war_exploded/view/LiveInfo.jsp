@@ -46,7 +46,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   
   <c:forEach items="${room}" var="r">
-  <span id="t">${r.roomType.roomType}</span><span id="money">${r.roomType.money}</span><span id="moneyS">${r.roomType.roomPrice}</span>
+	  <span id="t">${r.roomType.roomType}</span>
+	  <span id="money">${r.roomType.money}</span>
+	  <span id="moneyS">${r.roomType.roomPrice}</span>
   </c:forEach>
  <div id="all">
  
@@ -96,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<tr><td>实住天数：</td><td><input type="text" id="num2"  name="realDays" class="form-control btnh"  readonly="readonly"></td></tr>
     	<tr><td>已收款：</td><td><input type="text" class="form-control btnh" id="jie2" readonly="readonly" ></td></tr>
     	<tr><td>定金：</td><td><input type="text"  name="keepTime" class="form-control btnh" id="shou"  readonly="readonly"></td></tr>
-    	<tr><td>客人未付：</td><td><input type="text" id="z"  class="form-control btnh"  readonly="readonly"></td></tr>
+    	<tr><td>客人未付：</td><td><input type="text" id="weiFu"  class="form-control btnh"  readonly="readonly"></td></tr>
     	<tr><td>需退还：</td><td><input type="text" id="huan"  class="form-control btnh"  readonly="readonly"></td></tr>
     	<tr><td>应收款：</td><td><input type="text" id="zhi"  name="money" class="form-control btnh"  readonly="readonly"></td></tr>
     	<tr><td>离店日期：</td><td><input type="text" name="checkTime" id="li" class="form-control btnh"  readonly="readonly" value="${dfe}"></td></tr>
@@ -127,15 +129,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   var date2 = Date.parse(strDate2); 
    $("#num2").val(Math.ceil((date2-date1)/(24*60*60*1000)));
      //实际天数
-     var num=$("#num2").val();
+     var shiJi=$("#num2").val();
+      console.info("实际天数:" + shiJi);
      //天数
-    var shi=$("#num").html();
+    var dingDay=$("#num").html();
+      console.info("预计天数:" + dingDay);
     //相差天数
-    var cha=num-shi;
+    var cha=shiJi-dingDay;
     //实际天数小于天数
-    var cha2=shi-num;
+    var cha2=dingDay-shiJi;
    //一天房价
    var moneyS=$("#moneyS").html();
+      console.info("一天房价：" + moneyS)
    var zongMoneyS=moneyS*cha2;
    var zongMoneyS2=moneyS*cha
   // alert(zongMoneyS);
@@ -143,31 +148,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   var a=$("#jie").html();
     var b=$("#money").html();
     $("#zhi").val(a-b);
- 
-  if(num>shi){
-    //房价
-   $("#z").val(zongMoneyS2);
-   var h2=$("#z").val();
-      //实收
-     $("#zhi").val(h2*1+moneyS*1)
-  
-  }if(num<shi){
-    var a=$("#jie").html();
-    $("#huan").val(zongMoneyS);
-    var h=$("#huan").val();
-    //预收款
-   var b=$("#money").html();
-    //实收
-     $("#zhi").val(a-h-b)
-  }
+
+
    
   
-  $("#t2").html($("#t").html())
-  $("#money2").html($("#money").html())
-  $("#jie2").val($("#jie").html())
-   $("#shou").val($("#money").html())
-   $("#dan").val($("#live").html())
- 
+  $("#t2").html($("#t").html());
+  $("#money2").html($("#money").html());
+  $("#jie2").val($("#jie").html());
+   $("#shou").val($("#money").html());
+   $("#dan").val($("#live").html());
+
+  /*console.info("shiJI:" + shiJi);
+  console.info("dingDay:" + dingDay);
+  console.info("shiJI>dingDay ? :" + shiJi>dingDay);
+  console.info("shiJI<dingDay ? :" + shiJi<dingDay);*/
+
+  if(cha>0){
+      //实际入住大于额定入住情况
+	  console.info("进入num>shi分支")
+	  //房价
+	  $("#weiFu").val(zongMoneyS2);
+	  var h2=$("#weiFu").val();
+	  //定金
+      var dingJin = $("#shou").val();
+	  //实收=未付钱数+一天房间价格为罚金-定金
+	  $("#zhi").val(h2*1+moneyS*1-dingJin);
+	  //此时需要退还款为0
+	  $("#huan").val(0);
+  } else if (cha==0) {
+      var dingJin = $("#shou").val();
+      $("#huan").val(dingJin);
+      //当按时离店时客人未付设置为0
+      $("#weiFu").val(0);
+  }  else if (cha<0) {
+      //实际入住小于额定入住情况
+      var a=$("#jie").html();
+      $("#huan").val(zongMoneyS);
+      var h=$("#huan").val();
+      //预收款
+      var b=$("#money").html();
+      //实收
+      $("#zhi").val(a-h-b)
+	  //此时设置 客人未付字段值为0
+      $("#weiFu").val(0);
+  }
+
+
  
 /*   //还需支付
    var zhi=a*1-b*1

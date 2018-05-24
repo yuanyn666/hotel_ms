@@ -401,7 +401,7 @@ ${listRoomType1.roomType}:${listRoomType1.roomPrice}元/间
 		<div id="aa" class="p3" >
 		<div>
 		<table border="1"  class="table table-striped table-hover">
-		<thead><tr><th colspan="3"><h4>在住人信息(入住${lel}人)</h4></th></tr></thead>
+		<thead><tr><th colspan="3"><h4>入住房间数(已入住${lel}间)</h4></th></tr></thead>
 		<tr><td>在住房号</td><td>入住时间</td><td>入住天数</td></tr>
 		<c:forEach items="${liveinfo}" var="liveinfo">
 		<tr><td>${liveinfo.roomId}</td><td>${liveinfo.liveTime}</td><td>${liveinfo.liveDays}</td></tr>

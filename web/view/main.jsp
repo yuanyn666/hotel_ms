@@ -277,7 +277,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  ,content: 'danhao',
 		  offset: '70px',
 		  cancel: function(){
-			parent.location.reload();
+		      location.href="javascript:close(this)";
+			/*parent.location.reload();*/
 			}
 		});
 	}

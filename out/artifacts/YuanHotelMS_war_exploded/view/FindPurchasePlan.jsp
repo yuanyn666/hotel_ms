@@ -95,8 +95,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   ,anim: 3 //0-6的动画形式，-1不开启
   ,content: 'ListPlanDetail?id='+rowData.planId+'&&st='+rowData.state,
   offset: '40px',
-  cancel: function(){ 
-  parent.location.reload();
+  cancel: function(){
+      location.href="javascript:close(this)";
+  /*parent.location.reload();*/
 }
 });
 		},

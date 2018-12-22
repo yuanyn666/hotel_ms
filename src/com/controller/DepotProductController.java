@@ -1,13 +1,8 @@
 package com.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,25 +15,35 @@ import com.service.DepotProductService;
 
 @Controller
 public class DepotProductController {
-	@Resource
-	private DepotProductService service;
-	//查找所有
-	@RequestMapping("/findAllDepotProduct")
-	public String DepotProduct(Model model){
-		List<DepotProduct>list=service.findAllDepotProduct();
-		model.addAttribute("list",list);
-		return "showDepotProduct";}
+    @Resource
+    private DepotProductService service;
 
+    /**
+     * 查找所有
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping("/findAllDepotProduct")
+    public String DepotProduct(Model model) {
+        List<DepotProduct> list = service.findAllDepotProduct();
+        model.addAttribute("list", list);
+        return "showDepotProduct";
+    }
 
-
-	//查根据名字查找
-	@RequestMapping("/findProducttype")
-	public String findName(Model model, @RequestParam String producttype){
-		List<DepotProduct>list=service.findProducttype(producttype);
-		model.addAttribute("list", list);
-		return "showDepotProduct";
-	}
-
+    /**
+     * 查根据名字查找
+     *
+     * @param model
+     * @param producttype
+     * @return
+     */
+    @RequestMapping("/findProducttype")
+    public String findName(Model model, @RequestParam String producttype) {
+        List<DepotProduct> list = service.findProducttype(producttype);
+        model.addAttribute("list", list);
+        return "showDepotProduct";
+    }
 
 
 }
